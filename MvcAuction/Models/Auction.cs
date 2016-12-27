@@ -9,11 +9,18 @@ namespace MvcAuction.Models
 {
     public class Auction
     {
-        public long Id { get; set; }
         [Required]
+        public long Id { get; set; }
+
+        [Required]
+        [DataType(DataType.Text)]
+        [StringLength(maximumLength:200,MinimumLength = 5)]
         public string Title { get; set; }
 
+        [Required]
+        [DataType(DataType.Text)]
         public string Category { get; set; }
+
         [Required]
         public string Description { get; set; }
 
