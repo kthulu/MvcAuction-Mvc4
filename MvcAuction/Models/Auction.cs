@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -9,6 +10,7 @@ namespace MvcAuction.Models
 {
     public class Auction
     {
+      
         [Required]
         public long Id { get; set; }
 
@@ -44,5 +46,18 @@ namespace MvcAuction.Models
         [Display(Name="Current Price")]
         [DataType(DataType.Currency)]
         public decimal? CurrentPrice { get; set; }
+        //set to virtual so that entity framework can overight it when it retrieves is from the database
+        public virtual Collection<Bid> Bids { get; private set; } // only this class will set the property
+
+
+        public int BidCount => Bids.Count;
+        //{
+        //    get { return Bids.Count; }
+        //}
+
+        public Auction()
+        {
+            Bids = new Collection<Bid>();
+        }
     }    
 }

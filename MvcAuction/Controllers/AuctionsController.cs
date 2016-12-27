@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using MvcAuction.Models;
@@ -80,6 +81,7 @@ namespace MvcAuction.Controllers
             return View();
         }
 
+
         [HttpPost]
         public ActionResult Create([Bind(Exclude = "CurrentPrice")]Models.Auction auction)
         {
@@ -103,5 +105,36 @@ namespace MvcAuction.Controllers
                 return Create();
             
         }
+
+        [HttpPost]
+        public ActionResult Bid(Bid bid)
+        {
+            var db = new AuctionsDataContext();
+            var auction = db.Auctions.Find(bid.AuctionId);
+
+            if (auction == null)
+            {
+                ModelState.AddModelError("AuctiondId","Auction not found!");
+            }
+            else if (auction.CurrentPrice >= bid.Ammount)
+            {
+                ModelState.AddModelError("Ammount","Bid amount must exceed current bid");
+            }
+            else
+            {
+                bid.UserName = User.Identity.Name;
+                auction.Bids.Add(bid);
+                auction.CurrentPrice = bid.Ammount;
+                db.SaveChanges();
+
+            }
+            if(!Request.IsAjaxRequest())
+                return RedirectToAction("Auction", new { id = bid.AuctionId });
+
+            var httpStatus = ModelState.IsValid ? HttpStatusCode.OK : HttpStatusCode.BadRequest;
+            return new HttpStatusCodeResult(httpStatus);
+
+        }
+            
     }
 }
