@@ -14,7 +14,7 @@
         <p>Start Time: @auction.StartTime.ToString("g")</p>
         <p>End Time: @auction.EndTime.ToString("g")</p>
         <p>Starting Price: @auction.StartPrice.ToString("C")</p>
-        <p>Current Price:
+        <p class="current-price">Current Price:
             @*
                Since CurrentPrice is nullable we have to check to
                see if it has a value before we call .ToString()!
@@ -63,8 +63,9 @@
                         url: form.attr('action'),
                         data: form.serialize()
                     })
-                    .success(function() {
-                        alert("your bid has been submitted");
+                    .success(function(html) {
+                        //alert("your bid has been submitted");
+                        $('.current-price').replaceWith(html);
                     })
                     .error(function() {
                         alert("Your bid has been rejected");

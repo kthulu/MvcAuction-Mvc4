@@ -128,11 +128,16 @@ namespace MvcAuction.Controllers
                 db.SaveChanges();
 
             }
+           //all other requsts should still be redirected in response to the auction action
             if(!Request.IsAjaxRequest())
                 return RedirectToAction("Auction", new { id = bid.AuctionId });
 
-            var httpStatus = ModelState.IsValid ? HttpStatusCode.OK : HttpStatusCode.BadRequest;
-            return new HttpStatusCodeResult(httpStatus);
+            // this does not return any html so we are replacing with a partial view
+            //var httpStatus = ModelState.IsValid ? HttpStatusCode.OK : HttpStatusCode.BadRequest;
+            //return new HttpStatusCodeResult(httpStatus);
+
+            //partial views are only evenr mean to be sent in response an ajax requests
+            return PartialView("_CurrentPrice", auction);
 
         }
             
