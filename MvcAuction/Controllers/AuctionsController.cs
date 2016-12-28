@@ -74,7 +74,7 @@ namespace MvcAuction.Controllers
         [HttpGet]
         public ActionResult Create()
         {
-            var categories = new SelectList(new[] { "Option1", "Option2", "Option3" });
+            var categories = new SelectList(new[] { "Car", "Bike", "Toto" });
             
             ViewBag.CategoryList = categories;
 
@@ -137,7 +137,12 @@ namespace MvcAuction.Controllers
             //return new HttpStatusCodeResult(httpStatus);
 
             //partial views are only evenr mean to be sent in response an ajax requests
-            return PartialView("_CurrentPrice", auction);
+            //return PartialView("_CurrentPrice", auction);
+            return Json(new
+            {
+                CurrentPrice = bid.Ammount.ToString("C"),
+                BidCount = auction.BidCount
+            });
 
         }
             
