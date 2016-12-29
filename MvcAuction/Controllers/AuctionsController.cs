@@ -12,7 +12,7 @@ namespace MvcAuction.Controllers
     {
         //
         // GET: /Auctions/
-
+        [AllowAnonymous]
         public ActionResult Index()
         {
             //var auctions = new[] {
@@ -83,6 +83,7 @@ namespace MvcAuction.Controllers
 
 
         [HttpPost]
+        [Authorize(Roles="Admin")]
         public ActionResult Create([Bind(Exclude = "CurrentPrice")]Models.Auction auction)
         {
             //if (string.IsNullOrWhiteSpace(auction.Title))
