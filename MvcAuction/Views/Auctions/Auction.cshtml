@@ -42,6 +42,9 @@
                 </span>
 
                 @Html.Hidden("auctionId", auction.Id)
+
+                @Html.AntiForgeryToken()
+
                 <input class="post-bid" type="submit" value="Bid" />
             }
         </p>
@@ -70,7 +73,7 @@
                 //this is required when replacing antire html markup on line 17 above
                 //$('.current-price').replaceWith(html);
                 //}
-
+                
                 $.ajax({
                         type: "POST",
                         url: form.attr('action'),

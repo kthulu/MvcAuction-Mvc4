@@ -108,6 +108,7 @@ namespace MvcAuction.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Bid(Bid bid)
         {
             var db = new AuctionsDataContext();
