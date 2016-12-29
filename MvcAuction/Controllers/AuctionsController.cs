@@ -13,6 +13,7 @@ namespace MvcAuction.Controllers
         //
         // GET: /Auctions/
         [AllowAnonymous]
+        [OutputCache(Duration = 1)]
         public ActionResult Index()
         {
             //var auctions = new[] {
@@ -53,6 +54,7 @@ namespace MvcAuction.Controllers
             return View(auctions);
         }
 
+        [OutputCache(Duration = 10)]
         public ActionResult Auction(long id)
         {
             //var auction = new MvcAuction.Models.Auction()

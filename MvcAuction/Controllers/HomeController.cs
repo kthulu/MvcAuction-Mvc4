@@ -2,16 +2,20 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Caching;
 using System.Web.Mvc;
+using System.Web.UI;
+using Microsoft.Ajax.Utilities;
 
 namespace MvcAuction.Controllers
 {
     [AllowAnonymous]
     public class HomeController : Controller
     {
+        [OutputCache(Duration = 3)]
         public ActionResult Index()
         {
-            ViewBag.Message = "Modify this template to jump-start your ASP.NET MVC application.";
+            ViewBag.Message = "This page was created " + DateTime.Now;
 
             return View();
         }
