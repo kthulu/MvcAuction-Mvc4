@@ -6,6 +6,7 @@ using System.Web.Caching;
 using System.Web.Mvc;
 using System.Web.UI;
 using Microsoft.Ajax.Utilities;
+using MvcAuction.Models;
 
 namespace MvcAuction.Controllers
 {
@@ -18,6 +19,16 @@ namespace MvcAuction.Controllers
             ViewBag.Message = "This page was created " + DateTime.Now;
 
             return View();
+        }
+        [OutputCache(Duration=3600)]
+        public ActionResult CategoryNavigation()
+        {
+            var db = new AuctionsDataContext();
+            var categories = db.Auctions.Select(x => x.Category).Distinct();
+            ViewBag.Categories = categories.ToArray();
+
+            return PartialView();
+
         }
 
         public ActionResult About()
