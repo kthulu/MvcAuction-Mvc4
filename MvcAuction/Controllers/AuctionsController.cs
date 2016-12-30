@@ -76,7 +76,7 @@ namespace MvcAuction.Controllers
         [HttpGet]
         public ActionResult Create()
         {
-            var categories = new SelectList(new[] { "Car", "Bike", "Toto" });
+            var categories = new SelectList(new[] { "Car", "Bike", "Moped"  });
             
             ViewBag.CategoryList = categories;
 
@@ -85,7 +85,7 @@ namespace MvcAuction.Controllers
 
 
         [HttpPost]
-        [Authorize(Roles="Admin")]
+        [Authorize]
         public ActionResult Create([Bind(Exclude = "CurrentPrice")]Models.Auction auction)
         {
             //if (string.IsNullOrWhiteSpace(auction.Title))
