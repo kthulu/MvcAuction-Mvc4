@@ -177,6 +177,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\DemoStyles1.css" />
+    <Content Include="Content\DemoStyles2.css" />
+    <Content Include="Content\DemoStyles3.css" />
+    <Content Include="Content\DemoStyles4.css" />
+    <Content Include="Content\DemoStyles5.css" />
+    <Content Include="Content\DemoStyles6.css" />
+    <Content Include="Content\DemoStyles7.css" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -234,6 +241,15 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
+    <Content Include="Scripts\DemoScript1.js" />
+    <Content Include="Scripts\DemoScript2.js" />
+    <Content Include="Scripts\DemoScript3.js" />
+    <Content Include="Scripts\DemoScript4.js" />
+    <Content Include="Scripts\DemoScript5.js" />
+    <Content Include="Scripts\DemoScript6.js" />
+    <Content Include="Scripts\DemoScript7.js" />
+    <Content Include="Scripts\DemoScript8.js" />
+    <Content Include="Scripts\DemoScript9.js" />
     <Content Include="Scripts\jquery-1.7.1.js" />
     <Content Include="Scripts\jquery-1.7.1.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -248,7 +264,9 @@
     <Content Include="Scripts\knockout-2.1.0.debug.js" />
     <Content Include="Scripts\knockout-2.1.0.js" />
     <Content Include="Scripts\modernizr-2.5.3.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>

@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using System.Activities.Statements
+<!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="utf-8" />
@@ -7,6 +8,7 @@
         <meta name="viewport" content="width=device-width" />
         @Styles.Render("~/Content/css")
         @Scripts.Render("~/bundles/modernizr")
+        @Styles.Render("~/Content/DemoStyles")
     </head>
     <body>
         <header>
@@ -42,7 +44,15 @@
         {
             @RenderSection("scripts")
         }
-        
+
+        @*@if (IsSectionDefined("~/Scripts/DemoScripts"))
+        {
+            @RenderSection("~/Scripts/DemoScripts")
+        }*@
+
+        @Scripts.Render("~/Scripts/DemoScripts")
+
+
 
     </body>
 </html>
