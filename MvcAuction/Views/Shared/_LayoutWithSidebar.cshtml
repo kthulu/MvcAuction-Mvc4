@@ -3,8 +3,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>_LayoutWithSidebar</h2>
-
 @section Featured {
     @RenderSection("Featured", required: false)
 }
@@ -19,5 +17,4 @@
 
 <div class="content">
     @RenderBody()
-
 </div>
