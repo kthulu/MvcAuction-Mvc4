@@ -1,6 +1,8 @@
 ﻿@{
     ViewBag.Title = "Home Page";
+    DisplayModeProvider.Instance.RequireConsistentDisplayMode = true;
 }
+@*IN THE INDEX PAGE WE DEFINE CONTENT SECTIONS*@
 @section featured {
     <section class="featured">
         <div class="content-wrapper">

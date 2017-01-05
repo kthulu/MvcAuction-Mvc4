@@ -312,6 +312,8 @@
     <Content Include="Views\Auctions\Create.cshtml" />
     <Content Include="Views\Auctions\_CurrentPrice.cshtml" />
     <Content Include="Views\Home\CategoryNavigation.cshtml" />
+    <Content Include="Views\Auctions\Index.Mobile.cshtml" />
+    <Content Include="Views\Shared\_Layout.Mobile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.EnterpriseServices.Internal;
 using System.Linq;
 using System.Web;
 using System.Web.Caching;
 using System.Web.Mvc;
 using System.Web.UI;
+using System.Web.WebPages;
 using Microsoft.Ajax.Utilities;
 using MvcAuction.Models;
 
@@ -44,5 +46,15 @@ namespace MvcAuction.Controllers
 
             return View();
         }
+
+        public ActionResult SwitchView(string returnUrl, bool mobile = false)
+        {
+            HttpContext.ClearOverriddenBrowser();
+            HttpContext.SetOverriddenBrowser(
+                mobile ? BrowserOverride.Mobile : BrowserOverride.Desktop);
+            return Redirect(returnUrl);
+        }
+
     }
 }
+
