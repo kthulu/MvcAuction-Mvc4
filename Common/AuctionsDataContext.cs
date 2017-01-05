@@ -12,9 +12,7 @@ namespace MvcAuction.Models
 
         static AuctionsDataContext()
         {
-            //Entity database intialiser changes the db if db model changes
-            System.Data.Entity.Database.SetInitializer(new DropCreateDatabaseIfModelChanges<AuctionsDataContext>());
+            Database.SetInitializer(new DropCreateDatabaseIfModelChanges<AuctionsDataContext>());
         }
-
     }
 }

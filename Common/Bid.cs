@@ -13,17 +13,16 @@ namespace MvcAuction.Models
         public long AuctionId { get; set; }
 
         [Required]
-        public DateTime TimeStamp { get; set; }
+        public DateTime Timestamp { get; set; }
 
-        public string UserName { get; set; }
+        public string Username { get; set; }
 
-        [Range(1,double.MaxValue)]
-        public decimal Ammount { get; set; }
+        [Range(1, double.MaxValue)]
+        public decimal Amount { get; set; }
 
         public Bid()
         {
-            TimeStamp = DateTime.Now;
+            Timestamp = DateTime.Now;
         }
-
     }
 }

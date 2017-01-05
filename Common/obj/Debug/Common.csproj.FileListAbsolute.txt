@@ -1,0 +1,8 @@
+C:\Users\zach\Desktop\MvcAuction\Common\bin\Debug\Common.dll.config
+C:\Users\zach\Desktop\MvcAuction\Common\bin\Debug\Common.dll
+C:\Users\zach\Desktop\MvcAuction\Common\bin\Debug\Common.pdb
+C:\Users\zach\Desktop\MvcAuction\Common\bin\Debug\EntityFramework.dll
+C:\Users\zach\Desktop\MvcAuction\Common\bin\Debug\EntityFramework.xml
+C:\Users\zach\Desktop\MvcAuction\Common\obj\Debug\Common.dll
+C:\Users\zach\Desktop\MvcAuction\Common\obj\Debug\Common.pdb
+C:\Users\zach\Desktop\MvcAuction\Common\obj\Debug\Common.csprojResolveAssemblyReference.cache
