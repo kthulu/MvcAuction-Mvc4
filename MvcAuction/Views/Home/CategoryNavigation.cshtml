@@ -1,17 +1,8 @@
 ﻿<nav>
     <ul id="menu">
-        @if (ViewBag.Categories != null)
+        @foreach (string category in ViewBag.Categories)
         {
-            foreach (string category in ViewBag.Categories)
-            {
-                <li>@Html.ActionLink(category, "Index", "Auctions", new { category }, null)</li>
-            }
-        }
-        else
-        {
-            <li>@Html.ActionLink("Home", "Index", "Home")</li>
-            <li>@Html.ActionLink("About", "About", "Home")</li>
-            <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+            <li>@Html.ActionLink(category, "Index", "Auctions", new { category }, null)</li>
         }
     </ul>
 </nav>

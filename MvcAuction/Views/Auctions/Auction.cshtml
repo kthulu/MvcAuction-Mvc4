@@ -3,7 +3,6 @@
     var auction = Model;
 }
 
-
 @Html.ActionLink("Login", "Login", "Account")
 
 <div class="auction">
@@ -11,36 +10,35 @@
     <h3>@auction.Title</h3>
 
     <div class="details">
-        <p>Start Time: @auction.StartTime.ToString("g")</p>
-        <p>End Time: @auction.EndTime.ToString("g")</p>
-        <p>Starting Price: @auction.StartPrice.ToString("C")</p>
-        <p class="current-price">
-            Current Price:
-            @*
-                Since CurrentPrice is nullable we have to check to
-                see if it has a value before we call .ToString()!
-            *@
-            @if (auction.CurrentPrice == null)
-            {
-                <text>
-                    [No bids]
-                </text>
-            }
-            else
-            {
-                <span>@auction.CurrentPrice.Value.ToString("C")</span>
-                <span>[@auction.BidCount bids]</span>
-            }
-        </p>
+       <p>Start Time: @auction.StartTime.ToString("g")</p>
+       <p>End Time: @auction.EndTime.ToString("g")</p>
+       <p>Starting Price: @auction.StartPrice.ToString("C")</p>
+       <p class="current-price">Current Price:
+           @*
+               Since CurrentPrice is nullable we have to check to
+               see if it has a value before we call .ToString()!
+           *@
+           @if(auction.CurrentPrice == null)
+           {
+               <text>
+               [No bids]
+               </text>
+           }
+           else
+           {
+               <span>@auction.CurrentPrice.Value.ToString("C")</span>
+               <span>[@auction.BidCount bids]</span>
+           }
+       </p>
         <p>
             @using (Html.BeginForm("Bid", "Auctions"))
             {
                 var lowestBidAmount = auction.CurrentPrice.GetValueOrDefault(auction.StartPrice) + 1;
                 <span>
-                    Bid: $@Html.TextBox("ammount", lowestBidAmount)
+                    Bid: $@Html.TextBox("amount", lowestBidAmount)
                     @Html.ValidationMessage("amount")
                 </span>
-
+                
                 @Html.Hidden("auctionId", auction.Id)
 
                 @Html.AntiForgeryToken()
@@ -50,8 +48,18 @@
         </p>
     </div>
 
+    @if(auction.ImageUrl != null) {
+       <img src="@auction.ImageUrl" title="@auction.Title" />
+    }
+
+    <div class="description">
+       @auction.Description
+    </div>
+
 </div>
+
 <span>Last rendered: @DateTime.Now</span>
+
 <script id="current-price-template" type="application/html-template">
     <p class="current-price">
         <span>Current Price: {{CurrentPrice}}</span>
@@ -60,41 +68,35 @@
 </script>
 
 
-@section scripts
-{
+
+@section Scripts {
     <script type="text/javascript">
-        $(function() {
-            $('.post-bid').on("click", function() {
+        $(function () {
+            $('.post-bid').on("click", function () {
 
                 var form = $(this).parent("form");
 
-                //.success(function(html) {
-                //alert("your bid has been submitted");
-                //this is required when replacing antire html markup on line 17 above
-                //$('.current-price').replaceWith(html);
-                //}
-                
                 $.ajax({
-                        type: "POST",
-                        url: form.attr('action'),
-                        data: form.serialize()
-                    })
+                    type: "POST",
+                    url: form.attr('action'),
+                    data: form.serialize()
+                })
                     .success(function (data) {
-                        var template = $('#current-price-template').clone().html(); //id selector (#)
+                        var template = $('#current-price-template').clone().html();
 
                         var html =
                             template
                                 .replace('{{CurrentPrice}}', data.CurrentPrice)
                                 .replace('{{BidCount}}', data.BidCount);
-                        
-                        $('.current-price').replaceWith(html); //.class selector (.)
 
+                        $('.current-price').replaceWith(html);
                     })
-                    .error(function() {
+                    .error(function () {
                         alert("Your bid has been rejected");
                     });
+
                 return false;
             });
-        })
+        });
     </script>
 }

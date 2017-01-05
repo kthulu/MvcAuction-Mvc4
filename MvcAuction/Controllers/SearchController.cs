@@ -9,7 +9,6 @@ namespace MvcAuction.Controllers
 {
     public class SearchController : AsyncController
     {
-
         public async Task<ActionResult> Auctions(string keyword)
         {
             var auctions = await Task.Run<IEnumerable<Models.Auction>>(
@@ -18,9 +17,8 @@ namespace MvcAuction.Controllers
                     var db = new Models.AuctionsDataContext();
                     return db.Auctions.Where(x => x.Title.Contains(keyword)).ToArray();
                 });
-                return Json(auctions,JsonRequestBehavior.AllowGet);
-               
-        }
 
+            return Json(auctions, JsonRequestBehavior.AllowGet);
+        }
     }
 }

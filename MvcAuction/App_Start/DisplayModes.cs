@@ -8,15 +8,15 @@ public class DisplayModes
         // register iPhone-specific views
         DisplayModeProvider.Instance.Modes.Insert(0, new DefaultDisplayMode("iPhone")
         {
-            ContextCondition = (ctx => ctx.Request.UserAgent != null && ctx.Request.UserAgent.IndexOf(
-                "iPhone", StringComparison.OrdinalIgnoreCase) >= 0)
+            ContextCondition = (ctx => ctx.Request.UserAgent.IndexOf(
+            "iPhone", StringComparison.OrdinalIgnoreCase) >= 0)
         });
 
         // register iPad-specific views
         DisplayModeProvider.Instance.Modes.Insert(0, new DefaultDisplayMode("iPad")
         {
-            ContextCondition = (ctx => ctx.Request.UserAgent != null && ctx.Request.UserAgent.IndexOf(
-                "iPad", StringComparison.OrdinalIgnoreCase) >= 0)
+            ContextCondition = (ctx => ctx.Request.UserAgent.IndexOf(
+            "iPad", StringComparison.OrdinalIgnoreCase) >= 0)
         });
     }
 }

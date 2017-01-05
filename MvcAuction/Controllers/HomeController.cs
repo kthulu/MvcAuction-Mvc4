@@ -1,27 +1,24 @@
-﻿using System;
+﻿using MvcAuction.Models;
+using System;
 using System.Collections.Generic;
-using System.EnterpriseServices.Internal;
 using System.Linq;
 using System.Web;
-using System.Web.Caching;
 using System.Web.Mvc;
-using System.Web.UI;
 using System.Web.WebPages;
-using Microsoft.Ajax.Utilities;
-using MvcAuction.Models;
 
 namespace MvcAuction.Controllers
 {
     [AllowAnonymous]
     public class HomeController : Controller
     {
-        [OutputCache(Duration = 3)]
+        [OutputCache(Duration=3)]
         public ActionResult Index()
         {
-            ViewBag.Message = "This page was created " + DateTime.Now;
+            ViewBag.Message = "This page was rendered at " + DateTime.Now;
 
             return View();
         }
+
         [OutputCache(Duration=3600)]
         public ActionResult CategoryNavigation()
         {
@@ -30,7 +27,6 @@ namespace MvcAuction.Controllers
             ViewBag.Categories = categories.ToArray();
 
             return PartialView();
-
         }
 
         public ActionResult About()
@@ -52,9 +48,8 @@ namespace MvcAuction.Controllers
             HttpContext.ClearOverriddenBrowser();
             HttpContext.SetOverriddenBrowser(
                 mobile ? BrowserOverride.Mobile : BrowserOverride.Desktop);
+            
             return Redirect(returnUrl);
         }
-
     }
 }
-

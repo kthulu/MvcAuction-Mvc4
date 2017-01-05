@@ -1,10 +1,10 @@
-﻿using System;
+﻿using MvcAuction.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using MvcAuction.Models;
 
 namespace MvcAuction.Controllers
 {
@@ -12,10 +12,11 @@ namespace MvcAuction.Controllers
     {
         //
         // GET: /Auctions/
+
         [AllowAnonymous]
         [OutputCache(Duration = 1)]
         public ActionResult Index()
-        {
+        {  
             //var auctions = new[] {
             //    new Models.Auction()
             //    {
@@ -56,7 +57,7 @@ namespace MvcAuction.Controllers
 
         [OutputCache(Duration = 10)]
         public ActionResult Auction(long id)
-        {
+        {   
             //var auction = new MvcAuction.Models.Auction()
             //{
             //    Title = "Example Auction",
@@ -66,48 +67,12 @@ namespace MvcAuction.Controllers
             //    StartPrice = 1.00m,
             //    CurrentPrice = null,
             //};
-
             var db = new AuctionsDataContext();
             var auction = db.Auctions.Find(id);
 
             return View(auction);
         }
 
-        [HttpGet]
-        public ActionResult Create()
-        {
-            var categories = new SelectList(new[] { "Car", "Bike", "Moped"  });
-            
-            ViewBag.CategoryList = categories;
-
-            return View();
-        }
-
-
-        [HttpPost]
-        [Authorize]
-        public ActionResult Create([Bind(Exclude = "CurrentPrice")]Models.Auction auction)
-        {
-            //if (string.IsNullOrWhiteSpace(auction.Title))
-            //{
-            //    ModelState.AddModelError("Title", "Title is invalid");
-            //}
-            //else if (auction.Title.Length > 5 || auction.Title.Length > 200)
-            //{
-            //    ModelState.AddModelError("Title", "Title must be between 5 and 200 charactera long");
-            //}
-
-            if (ModelState.IsValid)
-            {
-                var db = new AuctionsDataContext();
-                db.Auctions.Add(auction);
-                db.SaveChanges();
-
-                RedirectToAction("Index");
-            }
-                return Create();
-            
-        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -118,37 +83,57 @@ namespace MvcAuction.Controllers
 
             if (auction == null)
             {
-                ModelState.AddModelError("AuctiondId","Auction not found!");
+                ModelState.AddModelError("AuctionId", "Auction not found!");
             }
-            else if (auction.CurrentPrice >= bid.Ammount)
+            else if (auction.CurrentPrice >= bid.Amount)
             {
-                ModelState.AddModelError("Ammount","Bid amount must exceed current bid");
+                ModelState.AddModelError("Amount", "Bid amount must exceed current bid");
             }
             else
             {
-                bid.UserName = User.Identity.Name;
+                bid.Username = User.Identity.Name;
                 auction.Bids.Add(bid);
-                auction.CurrentPrice = bid.Ammount;
+                auction.CurrentPrice = bid.Amount;
                 db.SaveChanges();
-
             }
-           //all other requsts should still be redirected in response to the auction action
-            if(!Request.IsAjaxRequest())
+            //all other requsts should still be redirected in response to the auction action
+            if (!Request.IsAjaxRequest())
                 return RedirectToAction("Auction", new { id = bid.AuctionId });
-
             // this does not return any html so we are replacing with a partial view
             //var httpStatus = ModelState.IsValid ? HttpStatusCode.OK : HttpStatusCode.BadRequest;
             //return new HttpStatusCodeResult(httpStatus);
-
             //partial views are only evenr mean to be sent in response an ajax requests
             //return PartialView("_CurrentPrice", auction);
-            return Json(new
-            {
-                CurrentPrice = bid.Ammount.ToString("C"),
+            return Json(new {
+                CurrentPrice = bid.Amount.ToString("C"),
                 BidCount = auction.BidCount
             });
-
         }
-            
+
+
+        [HttpGet]
+        public ActionResult Create()
+        {
+            var categoryList = new SelectList(new[] { "Automotive", "Electronics", "Games", "Home" });
+            ViewBag.CategoryList = categoryList;
+            return View();
+        }
+
+        [HttpPost]
+        [Authorize]
+        public ActionResult Create([Bind(Exclude="CurrentPrice")]Models.Auction auction)
+        {
+            if (ModelState.IsValid)
+            {
+                // Save to the database
+                var db = new AuctionsDataContext();
+                db.Auctions.Add(auction);
+                db.SaveChanges();
+
+                return RedirectToAction("Index");
+            }
+                
+            return Create();
+        }
     }
 }
