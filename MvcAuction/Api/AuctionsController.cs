@@ -16,7 +16,6 @@ namespace MvcAuction.Api
     {
         private AuctionsDataContext db = new AuctionsDataContext();
 
-
         public AuctionsController()
         {
             db.Configuration.ProxyCreationEnabled = false;
@@ -43,25 +42,28 @@ namespace MvcAuction.Api
         // PUT api/Auctions/5
         public HttpResponseMessage PutAuction(long id, Auction auction)
         {
-            if (ModelState.IsValid && id == auction.Id)
+            if (!ModelState.IsValid)
             {
-                db.Entry(auction).State = EntityState.Modified;
-
-                try
-                {
-                    db.SaveChanges();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    return Request.CreateResponse(HttpStatusCode.NotFound);
-                }
-
-                return Request.CreateResponse(HttpStatusCode.OK);
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
             }
-            else
+
+            if (id != auction.Id)
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
+
+            db.Entry(auction).State = EntityState.Modified;
+
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.NotFound, ex);
+            }
+
+            return Request.CreateResponse(HttpStatusCode.OK);
         }
 
         // POST api/Auctions
@@ -78,7 +80,7 @@ namespace MvcAuction.Api
             }
             else
             {
-                return Request.CreateResponse(HttpStatusCode.BadRequest);
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
             }
         }
 
@@ -97,9 +99,9 @@ namespace MvcAuction.Api
             {
                 db.SaveChanges();
             }
-            catch (DbUpdateConcurrencyException)
+            catch (DbUpdateConcurrencyException ex)
             {
-                return Request.CreateResponse(HttpStatusCode.NotFound);
+                return Request.CreateErrorResponse(HttpStatusCode.NotFound, ex);
             }
 
             return Request.CreateResponse(HttpStatusCode.OK, auction);
